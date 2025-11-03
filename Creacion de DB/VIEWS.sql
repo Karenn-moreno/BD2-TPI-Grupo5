@@ -1,4 +1,4 @@
-
+---Comentario de prueba
 ---vista_FuncionesDisponibles : lista de todas las funciones disponibles por pelicula, sala y horario
 
 CREATE VIEW vista_FuncionesDisponibles
