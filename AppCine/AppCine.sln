@@ -1,0 +1,37 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.14.36408.4 d17.14
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppwebCine", "AppwebCine\AppwebCine.csproj", "{F2154E9F-AEE4-4A9C-BE3E-122B74114B94}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dominio", "dominio\dominio.csproj", "{9B6D290D-4542-4468-A8E0-64A58E42392E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "negocio", "negocio\negocio.csproj", "{4EDF68DB-0B04-4690-A097-F3ECCEEF8042}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F2154E9F-AEE4-4A9C-BE3E-122B74114B94}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2154E9F-AEE4-4A9C-BE3E-122B74114B94}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2154E9F-AEE4-4A9C-BE3E-122B74114B94}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2154E9F-AEE4-4A9C-BE3E-122B74114B94}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B6D290D-4542-4468-A8E0-64A58E42392E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B6D290D-4542-4468-A8E0-64A58E42392E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B6D290D-4542-4468-A8E0-64A58E42392E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B6D290D-4542-4468-A8E0-64A58E42392E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EDF68DB-0B04-4690-A097-F3ECCEEF8042}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EDF68DB-0B04-4690-A097-F3ECCEEF8042}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EDF68DB-0B04-4690-A097-F3ECCEEF8042}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EDF68DB-0B04-4690-A097-F3ECCEEF8042}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F4DA5D26-24D4-4FEC-81C4-ED7DD955DD5F}
+	EndGlobalSection
+EndGlobal

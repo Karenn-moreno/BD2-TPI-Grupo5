@@ -1,0 +1,56 @@
+﻿:root {
+    --bs-primary: #d41121;
+    --bs-primary-rgb: 212, 17, 33;
+    --bs-body-bg: #181112;
+    --bs-body-color: #f8f6f6;
+    --bs-dark: #181112;
+    --bs-dark-rgb: 24, 17, 18;
+    --bs-light: #f8f6f6;
+    --bs-light-rgb: 248, 246, 246;
+}
+
+.btn-primary {
+    --bs-btn-bg: var(--bs-primary);
+    --bs-btn-border-color: var(--bs-primary);
+    --bs-btn-hover-bg: #b00e1b;
+    --bs-btn-hover-border-color: #b00e1b;
+    --bs-btn-active-bg: #9c0c17;
+    --bs-btn-active-border-color: #9c0c17;
+}
+
+.form-control, .form-select {
+    background-color: #2a2223;
+    border-color: #444;
+    color: var(--bs-body-color);
+}
+
+    .form-control:focus, .form-select:focus {
+        background-color: #2a2223;
+        border-color: var(--bs-primary);
+        color: var(--bs-body-color);
+        box-shadow: 0 0 0 0.25rem rgba(var(--bs-primary-rgb), 0.5);
+    }
+
+    .form-control::placeholder {
+        color: #888;
+    }
+
+.navbar-brand .icon-logo {
+    color: var(--bs-primary);
+    width: 2rem;
+    height: 2rem;
+}
+
+.table {
+    --bs-table-bg: #211819;
+    --bs-table-border-color: #3e3234;
+    --bs-table-striped-bg: #2a2223;
+    --bs-table-hover-bg: #322829;
+}
+
+.card {
+    background-color: #211819;
+    border-color: #3e3234;
+}
+
+

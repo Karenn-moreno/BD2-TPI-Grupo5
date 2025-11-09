@@ -1,0 +1,98 @@
+﻿
+:root {
+    --bs-body-bg: #d41121;
+    --bs-body-color: #212529;
+    --bs-emphasis-color-rgb: 0, 0, 0;
+    --bs-primary: #d41121;
+    --bs-primary-rgb: 212, 17, 33;
+}
+
+[data-bs-theme="dark"] {
+    --bs-body-bg: #181112;
+    --bs-body-color: #dee2e6;
+    --bs-emphasis-color-rgb: 255, 255, 255;
+    --bs-secondary-bg: #2b2b2b;
+    --bs-tertiary-bg: #212121;
+    --bs-border-color: #444;
+    
+}
+
+.seat {
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    font-size: 0.75rem;
+    font-weight: bold;
+    transition: background-color 0.2s ease-in-out, transform 0.1s ease-in-out;
+    user-select: none;
+}
+
+
+    .seat:hover:not(.occupied) {
+        transform: scale(1.1);
+    }
+
+    .seat.available {
+        background-color: #cfe2ff;
+        border: 1px solid #9ec5fe;
+        color: #084298;
+    }
+
+    .seat.selected {
+        background-color: #0d6efd;
+        color: white;
+        border: 1px solid #0a58ca;
+    }
+
+    .seat.occupied {
+        background-color: #6c757d;
+        color: #fff;
+        cursor: not-allowed;
+        border: 1px solid #565e64;
+    }
+
+[data-bs-theme="dark"] .seat.available {
+    background-color: #343a40;
+    border: 1px solid #495057;
+    color: #e9ecef;
+}
+
+[data-bs-theme="dark"] .seat.selected {
+    background-color: var(--bs-primary);
+    color: white;
+    border: 1px solid var(--bs-primary);
+}
+
+[data-bs-theme="dark"] .seat.occupied {
+    background-color: #495057;
+    color: #adb5bd;
+    border: 1px solid #343a40;
+}
+
+.screen {
+    height: 8px;
+    background: linear-gradient(to bottom, #adb5bd, #dee2e6);
+    border-radius: 4px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+[data-bs-theme="dark"] .screen {
+    background: linear-gradient(to bottom, #6c757d, #343a40);
+    box-shadow: 0 4px 20px rgba(255, 255, 255, 0.15);
+}
+input.btn-primary {
+    background-color: var(--bs-primary);
+    border-color: var(--bs-primary);
+    color: #fff; /* Forzamos el texto a blanco */
+}
+
+    /* Opcional: Para que cambie de color al pasar el mouse */
+    input.btn-primary:hover {
+        background-color: #a90e1a; /* Un rojo un poco más oscuro */
+        border-color: #a90e1a;
+        color: #fff;
+    }
