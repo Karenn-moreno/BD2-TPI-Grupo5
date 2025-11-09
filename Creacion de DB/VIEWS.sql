@@ -24,12 +24,13 @@ WHERE
     s.EstadoSala = 1            -- salas activas
     AND f.FechaYHora >= GETDATE() -- funciones que aun no han comenzado
 
----vista_Estrenos : lista las funciones de las películas estrenadas en los últimos 7 días. Muestra día y horario de la función, titulo de la película, duración y género.
+
+---vista_Estrenos : lista las funciones de las pelï¿½culas estrenadas en los ï¿½ltimos 7 dï¿½as. Muestra dï¿½a y horario de la funciï¿½n, titulo de la pelï¿½cula, duraciï¿½n y gï¿½nero.
 
 CREATE VIEW vista_UltimosEstrenos 
 AS
 SELECT
-    p.Titulo, f.FechaYHora as 'Fecha y hora de proyeccción', p.Duracion, p.Genero, p.FechaEstreno as 'Fecha de estreno'
+    p.Titulo, f.FechaYHora as 'Fecha y hora de proyeccciï¿½n', p.Duracion, p.Genero, p.FechaEstreno as 'Fecha de estreno'
 FROM
     Pelicula p
 INNER JOIN 
@@ -40,12 +41,12 @@ AND
     p.FechaEstreno <= GETDATE()
 
 
----vista_EstrenosProximos : lista las funciones de las películas a estrenarse en los próximos 7 días. Muestra día y horario de la función, titulo de la película, duración y género.
+---vista_EstrenosProximos : lista las funciones de las pelï¿½culas a estrenarse en los prï¿½ximos 7 dï¿½as. Muestra dï¿½a y horario de la funciï¿½n, titulo de la pelï¿½cula, duraciï¿½n y gï¿½nero.
 	
 CREATE VIEW vista_EstrenosProximos 
 AS
 SELECT
-	 p.Titulo, f.FechaYHora as 'Fecha y hora de proyeccción', p.Duracion, p.Genero, p.FechaEstreno as 'Fecha de estreno'
+	 p.Titulo, f.FechaYHora as 'Fecha y hora de proyeccciï¿½n', p.Duracion, p.Genero, p.FechaEstreno as 'Fecha de estreno'
 FROM
     Pelicula p
 INNER JOIN 
@@ -56,4 +57,5 @@ WHERE
 	p.FechaEstreno >= GETDATE()
 
  
+
 
