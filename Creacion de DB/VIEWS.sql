@@ -24,34 +24,36 @@ WHERE
     s.EstadoSala = 1            -- salas activas
     AND f.FechaYHora >= GETDATE() -- funciones que aun no han comenzado
 
----vista_Estrenos : lista las funciones estrenadas en los últimos 14 días. Muestra día y horario de la función, titulo de la película, duración y género.
-
+---vista_Estrenos : lista las funciones de las películas estrenadas en los últimos 7 días. Muestra día y horario de la función, titulo de la película, duración y género.
 
 CREATE VIEW vista_UltimosEstrenos 
 AS
 SELECT
-	p.Titulo, p.Genero, p.Duracion, CAST(f.FechaYHora AS date) AS Dia, CAST(f.FechaYHora AS TIME) AS Horario
+    p.Titulo, f.FechaYHora as 'Fecha y hora de proyeccción', p.Duracion, p.Genero, p.FechaEstreno as 'Fecha de estreno'
 FROM
-	Funcion AS f
-INNER JOIN
-	Pelicula AS p ON f.idPelicula = p.id
+    Pelicula p
+INNER JOIN 
+    Funcion f ON f.idPelicula = p.id
 WHERE
-	f.FechaYHora >= DATEADD(day, -14, GETDATE())
-	AND
-	f.FechaYHora <= GETDATE()
+    p.FechaEstreno >= DATEADD(day, -7, GETDATE())
+AND
+    p.FechaEstreno <= GETDATE()
 
----vista_EstrenosProximos : lista las funciones a estrenarse en los próximos 7 días. Muestra día y horario de la función, titulo de la película, duración y género.
+
+---vista_EstrenosProximos : lista las funciones de las películas a estrenarse en los próximos 7 días. Muestra día y horario de la función, titulo de la película, duración y género.
 	
 CREATE VIEW vista_EstrenosProximos 
 AS
 SELECT
-	p.Titulo, p.Genero, p.Duracion, CAST(f.FechaYHora AS date) AS Dia, CAST(f.FechaYHora AS TIME) AS Horario
+	 p.Titulo, f.FechaYHora as 'Fecha y hora de proyeccción', p.Duracion, p.Genero, p.FechaEstreno as 'Fecha de estreno'
 FROM
-	Funcion AS f
-INNER JOIN
-	Pelicula AS p ON f.idPelicula = p.id
+    Pelicula p
+INNER JOIN 
+    Funcion f ON f.idPelicula = p.id
 WHERE
-	f.FechaYHora <= DATEADD(day, 7, GETDATE())
+	p.FechaEstreno <= DATEADD(day, 7, GETDATE())
 	AND
-	f.FechaYHora >= GETDATE()
+	p.FechaEstreno >= GETDATE()
+
+ 
 
