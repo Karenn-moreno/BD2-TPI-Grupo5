@@ -45,14 +45,15 @@ CREATE TABLE Pelicula (
     Titulo VARCHAR(50) NOT NULL,
     Clasificacion VARCHAR(50),
     Duracion INT NOT NULL, /* Duración en minutos */
-    Genero VARCHAR(50)
+    Genero VARCHAR(50),
+    FechaEstreno DATE NOT NULL
 );
 
 CREATE TABLE Funcion (
     id BIGINT PRIMARY KEY IDENTITY(1,1),
     idPelicula BIGINT NOT NULL,
     idSala BIGINT NOT NULL,
-    FechaYHora DATETIME NOT NULL,
+    FechaYHora DATETIME2 NOT NULL,
     PrecioBase INT NOT NULL DEFAULT 0,
 
     FOREIGN KEY (idPelicula) REFERENCES Pelicula(id),
@@ -76,7 +77,7 @@ CREATE TABLE Usuario (
 CREATE TABLE Venta (
     id BIGINT PRIMARY KEY IDENTITY(1,1),
     idUsuario BIGINT NOT NULL,
-    FechaYHora DATETIME NOT NULL DEFAULT GETDATE(),
+    FechaYHora DATETIME2 NOT NULL DEFAULT GETDATE(),
     EstadoVenta BIT NOT NULL DEFAULT 1,   /* 1 = Activa, 0 = Anulada */
     Monto INT NOT NULL DEFAULT 0,
 
