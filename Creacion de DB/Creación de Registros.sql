@@ -85,3 +85,90 @@ VALUES
 ('1', '4', '2025-11-5 19:00:00'),
 ('10', '1', '2025-11-2 14:00:00');
 
+INSERT INTO TIPODEASIENTO (Nombre, PrecioAdicional)
+VALUES
+('Est�ndar', '0'),
+('VIP', '2000');
+
+
+DECLARE @Filas TABLE (Fila CHAR(1), EsVIP BIT);
+INSERT INTO @Filas (Fila, EsVIP) VALUES
+('A', 0),
+('B', 0),
+('C', 0),
+('D', 1),
+('E', 1),
+('F', 0),
+('G', 0),
+('H', 0);
+
+DECLARE @Numeros TABLE (Numero INT);
+INSERT INTO @Numeros (Numero) VALUES
+(1),(2),(3),(4),(5),(6),(7),(8),(9),(10);
+
+INSERT INTO ASIENTO (idSala, idTipoDeAsiento, Fila, Numero)
+SELECT 
+    s.id,
+    CASE WHEN f.EsVIP = 1 THEN 2 ELSE 1 END,
+    f.Fila,
+    n.Numero
+FROM SALA s
+CROSS JOIN @Filas f
+CROSS JOIN @Numeros n;
+
+
+INSERT INTO VENTA (idUsuario, FechaYHora, EstadoVenta, Monto)
+VALUES
+('1',  '2025-11-01 10:00:00', '1', '6000'),
+('3',  '2025-11-01 11:30:00', '1', '10500'),
+('5',  '2025-11-02 15:45:00', '1', '4000'),
+('7',  '2025-11-03 09:15:00', '1', '5600'),
+('9',  '2025-11-03 20:10:00', '1', '2500');
+
+
+INSERT INTO ENTRADA (idVenta, idFuncion, idAsiento, Precio)
+SELECT '1', '1', a.id, '3000'
+FROM ASIENTO a
+WHERE a.idSala = 4 AND a.Fila = 'A' AND a.Numero = 1;
+
+INSERT INTO ENTRADA (idVenta, idFuncion, idAsiento, Precio)
+SELECT '1', '1', a.id, '3000'
+FROM ASIENTO a
+WHERE a.idSala = 4 AND a.Fila = 'A' AND a.Numero = 2;
+
+INSERT INTO ENTRADA (idVenta, idFuncion, idAsiento, Precio)
+SELECT '2', '6', a.id, '3500'
+FROM ASIENTO a
+WHERE a.idSala = 8 AND a.Fila = 'A' AND a.Numero = 1;
+
+INSERT INTO ENTRADA (idVenta, idFuncion, idAsiento, Precio)
+SELECT '2', '6', a.id, '3500'
+FROM ASIENTO a
+WHERE a.idSala = 8 AND a.Fila = 'A' AND a.Numero = 2;
+
+INSERT INTO ENTRADA (idVenta, idFuncion, idAsiento, Precio)
+SELECT '2', '6', a.id, '3500'
+FROM ASIENTO a
+WHERE a.idSala = 8 AND a.Fila = 'B' AND a.Numero = 1;
+
+INSERT INTO ENTRADA (idVenta, idFuncion, idAsiento, Precio)
+SELECT '3', '2', a.id, '4000'
+FROM ASIENTO a
+WHERE a.idSala = 11 AND a.Fila = 'A' AND a.Numero = 1;
+
+INSERT INTO ENTRADA (idVenta, idFuncion, idAsiento, Precio)
+SELECT '4', '12', a.id, '2800'
+FROM ASIENTO a
+WHERE a.idSala = 1 AND a.Fila = 'A' AND a.Numero = 1;
+
+INSERT INTO ENTRADA (idVenta, idFuncion, idAsiento, Precio)
+SELECT '4', '12', a.id, '2800'
+FROM ASIENTO a
+WHERE a.idSala = 1 AND a.Fila = 'A' AND a.Numero = 2;
+
+INSERT INTO ENTRADA (idVenta, idFuncion, idAsiento, Precio)
+SELECT '5', '9', a.id, '2500'
+FROM ASIENTO a
+WHERE a.idSala = 3 AND a.Fila = 'A' AND a.Numero = 1;
+
+
