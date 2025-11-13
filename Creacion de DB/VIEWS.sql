@@ -56,6 +56,42 @@ WHERE
 	AND
 	p.FechaEstreno >= GETDATE()
 
+
+	
+
+CREATE VIEW vista_ClientesConEntradas
+AS
+SELECT
+    u.id              AS idUsuario,
+    u.Nombre          AS Nombre,
+    u.Apellido        AS Apellido,
+    u.Email           AS Email,
+    v.id              AS idVenta,
+    v.FechaYHora      AS FechaVenta,
+    e.id              AS idEntrada,
+    e.Precio          AS PrecioEntrada,
+    f.id              AS idFuncion,
+    f.FechaYHora      AS FechaFuncion,
+    p.Titulo          AS Pelicula,
+    s.NumeroSala      AS NumeroSala,
+    ts.Nombre         AS TipoDeSala,
+    a.Fila            AS FilaAsiento,
+    a.Numero          AS NumeroAsiento,
+    ta.Nombre         AS TipoDeAsiento
+FROM Usuario         AS u
+INNER JOIN Venta         AS v  ON v.idUsuario      = u.id
+INNER JOIN Entrada       AS e  ON e.idVenta        = v.id
+INNER JOIN Funcion       AS f  ON e.idFuncion      = f.id
+INNER JOIN Pelicula      AS p  ON f.idPelicula     = p.id
+INNER JOIN Sala          AS s  ON f.idSala         = s.id
+INNER JOIN TipoDeSala    AS ts ON s.idTipoDeSala   = ts.id
+INNER JOIN Asiento       AS a  ON e.idAsiento      = a.id
+INNER JOIN TipoDeAsiento AS ta ON a.idTipoDeAsiento = ta.id
+WHERE
+    v.EstadoVenta = 1
+    AND f.FechaYHora >= GETDATE();
+
+
  
 
 
