@@ -1,6 +1,6 @@
 
 ---vista_FuncionesDisponibles : lista de todas las funciones disponibles por pelicula, sala y horario
-
+GO
 CREATE VIEW vista_FuncionesDisponibles
 AS
 SELECT 
@@ -26,7 +26,7 @@ WHERE
 
 
 ---vista_Estrenos : lista las funciones de las pel�culas estrenadas en los �ltimos 7 d�as. Muestra d�a y horario de la funci�n, titulo de la pel�cula, duraci�n y g�nero.
-
+GO
 CREATE VIEW vista_UltimosEstrenos 
 AS
 SELECT
@@ -42,7 +42,7 @@ AND
 
 
 ---vista_EstrenosProximos : lista las funciones de las pel�culas a estrenarse en los pr�ximos 7 d�as. Muestra d�a y horario de la funci�n, titulo de la pel�cula, duraci�n y g�nero.
-	
+GO
 CREATE VIEW vista_EstrenosProximos 
 AS
 SELECT
@@ -58,7 +58,7 @@ WHERE
 
 
 	
-
+GO
 CREATE VIEW vista_ClientesConEntradas
 AS
 SELECT
