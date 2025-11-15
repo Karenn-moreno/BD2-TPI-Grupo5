@@ -1,8 +1,8 @@
----Cuenta, para cada dÌa y funciÛn elegida, la cantidad de entradas vendidas. TambiÈn informa fecha, hora y tÌtulo de la pelÌcula.
+---Cuenta, para cada d√≠a y funci√≥n elegida, la cantidad de entradas vendidas. Tambi√©n informa fecha, hora y t√≠tulo de la pel√≠cula.
 CREATE PROCEDURE sp_EntradasPorDia (@idFuncion BIGINT, @fecha DATETIME2)
 AS
 BEGIN
-	SELECT CAST(@fecha as date) as 'Fecha Consultada', COUNT(*)  as 'Entradas Vendidas', Funcion.id as 'ID Funcion', Funcion.FechaYHora as 'Fecha y hora de la funciÛn', Pelicula.Titulo as 'PelÌcula'
+	SELECT CAST(@fecha as date) as 'Fecha Consultada', COUNT(*)  as 'Entradas Vendidas', Funcion.id as 'ID Funcion', Funcion.FechaYHora as 'Fecha y hora de la funci√≥n', Pelicula.Titulo as 'Pel√≠cula'
 	FROM Entrada
 	INNER JOIN Venta ON Venta.id = Entrada.idVenta
 	LEFT JOIN Funcion ON Entrada.idFuncion = Funcion.id
@@ -14,11 +14,11 @@ END
 
 
 
----Cuenta, para cada funciÛn elegida, la cantidad de entradas vendidas. TambiÈn informa fecha, hora y tÌtulo de la pelÌcula.
+---Cuenta, para cada funci√≥n elegida, la cantidad de entradas vendidas. Tambi√©n informa fecha, hora y t√≠tulo de la pel√≠cula.
 CREATE PROCEDURE sp_EntradasPorFuncion (@idFuncion BIGINT)
 AS
 BEGIN
-	SELECT COUNT(*) as 'Entradas Vendidas', Funcion.id as 'ID Funcion', Funcion.FechaYHora as 'Fecha y hora de la funciÛn', Pelicula.Titulo as 'PelÌcula'
+	SELECT COUNT(*) as 'Entradas Vendidas', Funcion.id as 'ID Funcion', Funcion.FechaYHora as 'Fecha y hora de la funci√≥n', Pelicula.Titulo as 'Pel√≠cula'
 	FROM Entrada
 	INNER JOIN Venta ON Venta.id = Entrada.idVenta
 	LEFT JOIN Funcion ON Entrada.idFuncion = Funcion.id
@@ -30,8 +30,8 @@ END
 
 
 
----Cuenta, para cada pelÌcula, el total de entradas vendidas.
-CREATE PROCEDURE sp_EntradasPorPelÌcula (@idPelicula BIGINT)
+---Cuenta, para cada pel√≠cula, el total de entradas vendidas.
+CREATE PROCEDURE sp_EntradasPorPel√≠cula (@idPelicula BIGINT)
 AS
 BEGIN
 	SELECT COUNT(*) as 'Entradas Vendidas', p.Titulo, P.Duracion, p.Clasificacion, p.Genero
@@ -41,7 +41,7 @@ BEGIN
 	WHERE p.id = @idPelicula
 GROUP BY p.Titulo, P.Duracion, p.Clasificacion, p.Genero
 END
----EXEC sp_EntradasPorPelÌcula 10
+---EXEC sp_EntradasPorPel√≠cula 10
 
 
 --realiza las rutinas validas para reprogramar una funcion
@@ -54,7 +54,7 @@ BEGIN
     SET NOCOUNT ON;
     BEGIN TRY
         BEGIN TRANSACTION;
-        -- validar que la funciÛn y la sala existan
+        -- validar que la funci√≥n y la sala existan
         IF NOT EXISTS (SELECT 1 FROM FUNCION WHERE id = @idFuncion)
         BEGIN
             RAISERROR('Error: La funcion con ID %d no existe.', 16, 1, @idFuncion);
@@ -73,7 +73,7 @@ BEGIN
         DECLARE @SalaActual INT;
         SELECT @SalaActual = idSala FROM FUNCION WHERE id = @idFuncion;
 
-        -- si la sala est· cambiando y hay entradas vendidas...
+        -- si la sala est√° cambiando y hay entradas vendidas...
         IF (@SalaActual <> @NuevoIdSala) AND EXISTS (SELECT 1 FROM ENTRADA WHERE idFuncion = @idFuncion)
         BEGIN
             RAISERROR('Error: No se puede cambiar de sala una funcion que ya tiene entradas vendidas. Esto viola la integridad de los asientos (Trigger TR_AsientoSala). Primero debe anular las ventas asociadas.',16, 1);
@@ -86,16 +86,16 @@ BEGIN
         DECLARE @MiDuracion INT;
         DECLARE @MiNuevoFin DATETIME2;
 
-        -- Obtener la duraciÛn de la pelÌcula de esta funciÛn
+        -- Obtener la duraci√≥n de la pel√≠cula de esta funci√≥n
         SELECT @MiDuracion = p.Duracion 
         FROM PELICULA p
         JOIN FUNCION f ON p.id = f.idPelicula
         WHERE f.id = @idFuncion;
 
-        -- calcular la hora de fin de nuestra funciÛn
+        -- calcular la hora de fin de nuestra funci√≥n
         SET @MiNuevoFin = DATEADD(minute, @MiDuracion, @MiNuevoInicio);
 
-        -- Buscamos si OTRA funciÛn se superponeen 
+        -- Buscamos si OTRA funci√≥n se superponeen 
         IF EXISTS (
             SELECT 1
             FROM FUNCION f
@@ -111,7 +111,7 @@ BEGIN
             ROLLBACK TRANSACTION;
             RETURN;
         END
-        -- actualizamos la funciÛn
+        -- actualizamos la funci√≥n
         UPDATE FUNCION
         SET 
             FechaYHora = @NuevaFechaYHora,
@@ -140,3 +140,62 @@ GO
     @NuevaFechaYHora = '2025-11-14 21:30:00', -- superpone
     @NuevoIdSala = 3;
 */
+
+
+---VenderEntrada: inserta una entrada si el asiento est√° disponible.
+CREATE PROCEDURE sp_VenderEntrada (
+    @idVenta   BIGINT,
+    @idFuncion BIGINT,
+    @idAsiento BIGINT,
+    @Precio    INT
+)
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    IF NOT EXISTS (
+        SELECT 1
+        FROM Venta
+        WHERE id = @idVenta
+          AND EstadoVenta = 1
+    )
+    BEGIN
+        RAISERROR('La venta indicada no existe o est√° anulada.', 16, 1);
+        RETURN;
+    END;
+
+    IF NOT EXISTS (
+        SELECT 1
+        FROM Funcion
+        WHERE id = @idFuncion
+    )
+    BEGIN
+        RAISERROR('La funci√≥n indicada no existe.', 16, 1);
+        RETURN;
+    END;
+
+    IF NOT EXISTS (
+        SELECT 1
+        FROM Asiento
+        WHERE id = @idAsiento
+    )
+    BEGIN
+        RAISERROR('El asiento indicado no existe.', 16, 1);
+        RETURN;
+    END;
+
+    IF EXISTS (
+        SELECT 1
+        FROM Entrada
+        WHERE idFuncion = @idFuncion
+          AND idAsiento = @idAsiento
+    )
+    BEGIN
+        RAISERROR('El asiento ya se encuentra vendido para esta funci√≥n.', 16, 1);
+        RETURN;
+    END;
+
+    INSERT INTO Entrada (idVenta, idFuncion, idAsiento, Precio)
+    VALUES (@idVenta, @idFuncion, @idAsiento, @Precio);
+END
+GO
