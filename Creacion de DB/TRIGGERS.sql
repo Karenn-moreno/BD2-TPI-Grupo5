@@ -88,3 +88,28 @@ BEGIN
     INSERT INTO Funcion(idPelicula, idSala, FechaYHora, PrecioBase)
     SELECT idPelicula, idSala, FechaYHora, PrecioBase FROM inserted
 END;
+
+---actualiza el Monto de Venta segun sus Entradas
+CREATE TRIGGER TR_ActualizarMontoVenta
+ON Entrada
+AFTER INSERT, UPDATE, DELETE
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    ;WITH VentasAfectadas AS (
+        SELECT DISTINCT idVenta FROM inserted
+        UNION
+        SELECT DISTINCT idVenta FROM deleted
+    )
+    UPDATE v
+    SET Monto = ISNULL(t.Total, 0)
+    FROM Venta v
+    INNER JOIN VentasAfectadas va ON v.id = va.idVenta
+    LEFT JOIN (
+        SELECT idVenta, SUM(Precio) AS Total
+        FROM Entrada
+        GROUP BY idVenta
+    ) t ON v.id = t.idVenta;
+END
+GO
