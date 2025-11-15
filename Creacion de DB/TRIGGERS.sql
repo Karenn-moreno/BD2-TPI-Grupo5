@@ -1,6 +1,6 @@
 USE BD2_TPI_G05
 GO
-
+--TR_AsientoSala: controla que el asiento corresponda a la sala de funcion a vender 
 CREATE TRIGGER TR_AsientoSala
 ON Entrada
 AFTER INSERT, UPDATE
@@ -26,4 +26,25 @@ BEGIN
         RETURN;
     END
 END;
+GO
+
+-- se realiza INSERT que DEBE fallar
+PRINT 'Probando el trigger con datos invalidos...';
+GO
+
+BEGIN TRANSACTION;
+INSERT INTO ENTRADA (idVenta, idFuncion, idAsiento, Precio)
+SELECT 
+
+    '5', -- idVenta (de Valentina Diaz)
+    '1', -- idFuncion (Funcion 1, que es en la SALA 4)
+    a.id, -- idAsiento
+    '3000'
+
+FROM ASIENTO a
+WHERE 
+    a.idSala = 1 AND a.Fila = 'A' AND a.Numero = 5;
+
+COMMIT TRANSACTION;
+
 GO
