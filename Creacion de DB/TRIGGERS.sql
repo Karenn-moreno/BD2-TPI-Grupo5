@@ -48,3 +48,43 @@ WHERE
 COMMIT TRANSACTION;
 
 GO
+
+CREATE TRIGGER TR_SolapamientoFunciones
+ON Funcion 
+INSTEAD OF INSERT
+AS
+BEGIN
+      DECLARE @idSala BIGINT
+      DECLARE @fechayhora DATETIME2
+
+      SELECT @idSala = idSala, @fechayhora = FechaYHora FROM inserted  
+
+
+      IF(SELECT COUNT(*) FROM Funcion WHERE idSala=@idSala AND FechaYHora=@fechayhora) >= 1
+      BEGIN
+            RAISERROR (
+            'Error de validacion: HORARIO YA OCUPADO EN LA SALA.',
+            16,
+            1
+            );
+      RETURN;
+      END
+      
+      IF(
+      SELECT COUNT(*)
+      FROM Funcion F
+      INNER JOIN Pelicula P ON F.idPelicula = P.id
+      WHERE F.idSala=@idSala AND (@fechayhora<= DATEADD(minute, p.duracion + 20, fechayhora) AND @fechayhora >= FechaYHora)
+      )>=1
+      BEGIN
+             RAISERROR (
+            'Error de validacion: HORARIO YA OCUPADO EN LA SALA.',
+            16,
+            1
+            );
+      RETURN;
+      END
+
+    INSERT INTO Funcion(idPelicula, idSala, FechaYHora, PrecioBase)
+    SELECT idPelicula, idSala, FechaYHora, PrecioBase FROM inserted
+END;
