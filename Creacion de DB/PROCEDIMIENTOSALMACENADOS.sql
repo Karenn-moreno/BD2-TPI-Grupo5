@@ -12,7 +12,7 @@ BEGIN
 END
 ---EXEC sp_EntradasPorDia 6, '2025-11-01'
 
-
+GO
 
 ---Cuenta, para cada función elegida, la cantidad de entradas vendidas. También informa fecha, hora y título de la película.
 CREATE PROCEDURE sp_EntradasPorFuncion (@idFuncion BIGINT)
@@ -28,7 +28,7 @@ BEGIN
 END
 ---EXEC sp_EntradasPorFuncion 12
 
-
+GO
 
 ---Cuenta, para cada película, el total de entradas vendidas.
 CREATE PROCEDURE sp_EntradasPorPelícula (@idPelicula BIGINT)
@@ -43,6 +43,7 @@ GROUP BY p.Titulo, P.Duracion, p.Clasificacion, p.Genero
 END
 ---EXEC sp_EntradasPorPelícula 10
 
+GO
 
 --realiza las rutinas validas para reprogramar una funcion
 CREATE PROCEDURE sp_ReprogramarFuncion

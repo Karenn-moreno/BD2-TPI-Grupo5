@@ -27,7 +27,7 @@ BEGIN
     END
 END;
 GO
-
+/*
 -- se realiza INSERT que DEBE fallar
 PRINT 'Probando el trigger con datos invalidos...';
 GO
@@ -45,7 +45,7 @@ FROM ASIENTO a
 WHERE 
     a.idSala = 1 AND a.Fila = 'A' AND a.Numero = 5;
 
-COMMIT TRANSACTION;
+COMMIT TRANSACTION;*/
 
 GO
 
