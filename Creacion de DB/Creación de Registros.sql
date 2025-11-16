@@ -39,7 +39,7 @@ VALUES
 ('Matrix', '+16', '136', 'Ciencia Ficcion', '2025-11-23'),
 ('Interstellar', '+13', '169', 'Ciencia Ficcion', '2025-11-25'),
 ('Gladiador', '+16', '155', 'Accion/Drama', '2025-11-27'),
-('Par·sitos', '+18', '132', 'Thriller/Comedia Negra', '2025-11-28');
+('Par√°sitos', '+18', '132', 'Thriller/Comedia Negra', '2025-11-28');
 
 INSERT INTO TIPODESALA (Nombre, PrecioAdicional)
 VALUES
@@ -158,7 +158,11 @@ VALUES
 ('3',  '2025-11-01 11:30:00', '1', '10500'),
 ('5',  '2025-11-02 15:45:00', '1', '4000'),
 ('7',  '2025-11-03 09:15:00', '1', '5600'),
-('9',  '2025-11-03 20:10:00', '1', '2500');
+('9',  '2025-11-03 20:10:00', '1', '2500'),
+('2',  '2025-11-18 10:00:00', '1', '2500'),
+('4',  '2025-11-19 11:30:00', '1', '0'),
+('6',  '2025-11-20 15:45:00', '1', '0');
+    
 
 
 INSERT INTO ENTRADA (idVenta, idFuncion, idAsiento, Precio)
@@ -206,4 +210,21 @@ SELECT '5', '9', a.id, '2500'
 FROM ASIENTO a
 WHERE a.idSala = 3 AND a.Fila = 'A' AND a.Numero = 1;
 
+INSERT INTO ENTRADA (idVenta, idFuncion, idAsiento, Precio)
+SELECT '6', '3', a.id, '8000'
+FROM ASIENTO a
+WHERE a.idSala = (SELECT idSala FROM Funcion WHERE id = 3)
+  AND a.Fila = 'A' AND a.Numero = 3;
+
+INSERT INTO ENTRADA (idVenta, idFuncion, idAsiento, Precio)
+SELECT '7', '4', a.id, '8000'
+FROM ASIENTO a
+WHERE a.idSala = (SELECT idSala FROM Funcion WHERE id = 4)
+  AND a.Fila = 'A' AND a.Numero = 4;
+
+INSERT INTO ENTRADA (idVenta, idFuncion, idAsiento, Precio)
+SELECT '8', '8', a.id, '8000'
+FROM ASIENTO a
+WHERE a.idSala = (SELECT idSala FROM Funcion WHERE id = 8)
+  AND a.Fila = 'A' AND a.Numero = 5;
 
