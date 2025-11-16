@@ -51,43 +51,44 @@ GO
 
 CREATE TRIGGER TR_SolapamientoFunciones
 ON Funcion 
-INSTEAD OF INSERT
+AFTER INSERT
 AS
 BEGIN
-      DECLARE @idSala BIGINT
-      DECLARE @fechayhora DATETIME2
-
-      SELECT @idSala = idSala, @fechayhora = FechaYHora FROM inserted  
-
-
-      IF(SELECT COUNT(*) FROM Funcion WHERE idSala=@idSala AND FechaYHora=@fechayhora) >= 1
-      BEGIN
-            RAISERROR (
-            'Error de validacion: HORARIO YA OCUPADO EN LA SALA.',
-            16,
-            1
-            );
-      RETURN;
-      END
+      SET NOCOUNT ON;
+      IF EXISTS (
+      SELECT 1
+        FROM inserted i
+        JOIN FUNCION f ON f.idSala = i.idSala
+                       AND f.FechaYHora = i.FechaYHora
+                       AND f.id <> i.id  
+    )  
+	BEGIN
+        RAISERROR('Error: ya existe una función en esa sala con la misma fecha y hora.', 16, 1);
+        ROLLBACK TRANSACTION;
+        RETURN;
+    END
       
-      IF(
-      SELECT COUNT(*)
-      FROM Funcion F
-      INNER JOIN Pelicula P ON F.idPelicula = P.id
-      WHERE F.idSala=@idSala AND (@fechayhora<= DATEADD(minute, p.duracion + 20, fechayhora) AND @fechayhora >= FechaYHora)
-      )>=1
-      BEGIN
-             RAISERROR (
-            'Error de validacion: HORARIO YA OCUPADO EN LA SALA.',
-            16,
-            1
-            );
-      RETURN;
-      END
-
-    INSERT INTO Funcion(idPelicula, idSala, FechaYHora, PrecioBase)
-    SELECT idPelicula, idSala, FechaYHora, PrecioBase FROM inserted
+      IF EXISTS (
+        SELECT 1
+        FROM inserted i
+        JOIN PELICULA p_i ON p_i.id = i.idPelicula
+        JOIN FUNCION f ON f.idSala = i.idSala
+                      AND f.id <> i.id     -- no compara con sí misma
+        JOIN PELICULA p_f ON p_f.id = f.idPelicula
+      WHERE 
+            -- NuevoInicio < FinExistente
+            i.FechaYHora < DATEADD(minute, p_f.Duracion + 20, f.FechaYHora)
+            AND
+            -- InicioExistente < NuevoFin
+            f.FechaYHora < DATEADD(minute, p_i.Duracion + 20, i.FechaYHora)
+    )
+    BEGIN
+        RAISERROR('Error: la sala ya está ocupada en ese horario (solapamiento detectado).', 16, 1);
+        ROLLBACK TRANSACTION;
+		RETURN;
+    END
 END;
+GO
 
 ---actualiza el Monto de Venta segun sus Entradas
 CREATE TRIGGER TR_ActualizarMontoVenta
