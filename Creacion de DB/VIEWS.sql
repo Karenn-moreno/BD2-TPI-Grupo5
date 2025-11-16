@@ -25,12 +25,12 @@ WHERE
     AND f.FechaYHora >= GETDATE() -- funciones que aun no han comenzado
 
 
----vista_Estrenos : lista las funciones de las pel�culas estrenadas en los �ltimos 7 d�as. Muestra d�a y horario de la funci�n, titulo de la pel�cula, duraci�n y g�nero.
+---vista_Estrenos : lista las funciones de las peliculas estrenadas en los ultimos 7 dias. Muestra dia y horario de la funcion, titulo de la pelicula, duracion y genero.
 GO
 CREATE VIEW vista_UltimosEstrenos 
 AS
 SELECT
-    p.Titulo, f.FechaYHora as 'Fecha y hora de proyeccci�n', p.Duracion, p.Genero, p.FechaEstreno as 'Fecha de estreno'
+    p.Titulo, f.FechaYHora as 'Fecha y hora de proyecccion', p.Duracion, p.Genero, p.FechaEstreno as 'Fecha de estreno'
 FROM
     Pelicula p
 INNER JOIN 
@@ -41,12 +41,12 @@ AND
     p.FechaEstreno <= GETDATE()
 
 
----vista_EstrenosProximos : lista las funciones de las pel�culas a estrenarse en los pr�ximos 7 d�as. Muestra d�a y horario de la funci�n, titulo de la pel�cula, duraci�n y g�nero.
+---vista_EstrenosProximos : lista las funciones de las peliculas a estrenarse en los proximos 7 dias. Muestra dia y horario de la funcion, titulo de la pelicula, duracion y genero.
 GO
 CREATE VIEW vista_EstrenosProximos 
 AS
 SELECT
-	 p.Titulo, f.FechaYHora as 'Fecha y hora de proyeccci�n', p.Duracion, p.Genero, p.FechaEstreno as 'Fecha de estreno'
+	 p.Titulo, f.FechaYHora as 'Fecha y hora de proyecccion', p.Duracion, p.Genero, p.FechaEstreno as 'Fecha de estreno'
 FROM
     Pelicula p
 INNER JOIN 
