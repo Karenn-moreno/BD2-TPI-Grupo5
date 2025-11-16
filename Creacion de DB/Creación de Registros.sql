@@ -228,3 +228,47 @@ FROM ASIENTO a
 WHERE a.idSala = (SELECT idSala FROM Funcion WHERE id = 8)
   AND a.Fila = 'A' AND a.Numero = 5;
 
+INSERT INTO ENTRADA (idVenta, idFuncion, idAsiento, Precio)
+SELECT '6', '3', a.id, '8000'
+FROM ASIENTO a
+WHERE a.idSala = (SELECT idSala FROM Funcion WHERE id = 3)
+  AND a.Fila = 'A' AND a.Numero = 6;
+
+INSERT INTO ENTRADA (idVenta, idFuncion, idAsiento, Precio)
+SELECT '6', '3', a.id, '8000'
+FROM ASIENTO a
+WHERE a.idSala = (SELECT idSala FROM Funcion WHERE id = 3)
+  AND a.Fila = 'A' AND a.Numero = 7;
+
+INSERT INTO ENTRADA (idVenta, idFuncion, idAsiento, Precio)
+SELECT '6', '3', a.id, '8000'
+FROM ASIENTO a
+WHERE a.idSala = (SELECT idSala FROM Funcion WHERE id = 3)
+  AND a.Fila = 'A' AND a.Numero = 8;
+
+INSERT INTO ENTRADA (idVenta, idFuncion, idAsiento, Precio)
+SELECT '7', '4', a.id, '8000'
+FROM ASIENTO a
+WHERE a.idSala = (SELECT idSala FROM Funcion WHERE id = 4)
+  AND a.Fila = 'A' AND a.Numero = 6;
+
+INSERT INTO ENTRADA (idVenta, idFuncion, idAsiento, Precio)
+SELECT '7', '4', a.id, '8000'
+FROM ASIENTO a
+WHERE a.idSala = (SELECT idSala FROM Funcion WHERE id = 4)
+  AND a.Fila = 'A' AND a.Numero = 7;
+
+INSERT INTO ENTRADA (idVenta, idFuncion, idAsiento, Precio)
+SELECT '8', '8', a.id, '8000'
+FROM ASIENTO a
+WHERE a.idSala = (SELECT idSala FROM Funcion WHERE id = 8)
+  AND a.Fila = 'A' AND a.Numero = 6;
+
+INSERT INTO ENTRADA (idVenta, idFuncion, idAsiento, Precio)
+SELECT '8', '8', a.id, '8000'
+FROM ASIENTO a
+WHERE a.idSala = (SELECT idSala FROM Funcion WHERE id = 8)
+  AND a.Fila = 'A' AND a.Numero = 7;
+
+
+
