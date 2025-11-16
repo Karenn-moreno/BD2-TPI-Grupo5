@@ -44,7 +44,7 @@ CREATE TABLE Pelicula (
     id BIGINT PRIMARY KEY IDENTITY(1,1),
     Titulo VARCHAR(50) NOT NULL,
     Clasificacion VARCHAR(50),
-    Duracion INT NOT NULL, /* Duración en minutos */
+    Duracion INT NOT NULL, /* DuraciÃ³n en minutos */
     Genero VARCHAR(50),
     FechaEstreno DATE NOT NULL
 );
